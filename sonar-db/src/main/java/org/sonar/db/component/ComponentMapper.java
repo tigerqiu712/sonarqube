@@ -143,6 +143,12 @@ public interface ComponentMapper {
 
   void update(ComponentUpdateDto component);
 
+  /**
+   * @deprecated use {@link #update(ComponentUpdateDto)} instead
+   */
+  @Deprecated
+  void deprecatedUpdate(ComponentDto component);
+
   void applyBChangesForRootComponentUuid(@Param("projectUuid") String projectUuid);
 
   void resetBChangedForRootComponentUuid(@Param("projectUuid") String projectUuid);

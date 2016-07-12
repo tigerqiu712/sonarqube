@@ -648,4 +648,26 @@
     DELETE FROM projects WHERE id=#{id}
   </delete>
 
+  <update id="deprecatedUpdate" parameterType="Component" useGeneratedKeys="false">
+    UPDATE projects SET
+    kee=#{kee,jdbcType=VARCHAR},
+    deprecated_kee=#{deprecatedKey,jdbcType=VARCHAR},
+    project_uuid=#{projectUuid,jdbcType=VARCHAR},
+    module_uuid=#{moduleUuid,jdbcType=VARCHAR},
+    module_uuid_path=#{moduleUuidPath,jdbcType=VARCHAR},
+    name=#{name,jdbcType=VARCHAR},
+    long_name=#{longName,jdbcType=VARCHAR},
+    qualifier=#{qualifier,jdbcType=VARCHAR},
+    scope=#{scope,jdbcType=VARCHAR},
+    language=#{language,jdbcType=VARCHAR},
+    description=#{description,jdbcType=VARCHAR},
+    root_uuid=#{rootUuid,jdbcType=VARCHAR},
+    path=#{path,jdbcType=VARCHAR},
+    copy_component_uuid=#{copyComponentUuid,jdbcType=VARCHAR},
+    developer_uuid=#{developerUuid,jdbcType=VARCHAR},
+    enabled=#{enabled,jdbcType=BOOLEAN},
+    authorization_updated_at=#{authorizationUpdatedAt,jdbcType=BIGINT}
+    WHERE uuid=#{uuid}
+  </update>
+
 </mapper>

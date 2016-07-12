@@ -349,6 +349,14 @@ public class ComponentDao implements Dao {
     mapper(session).update(component);
   }
 
+  /**
+   * @deprecated use {@link #update(DbSession, ComponentUpdateDto)} instead
+   */
+  @Deprecated
+  public void update(DbSession session, ComponentDto component) {
+    mapper(session).deprecatedUpdate(component);
+  }
+
   public void applyBChangesForRootComponentUuid(DbSession session, String projectUuid) {
     mapper(session).applyBChangesForRootComponentUuid(projectUuid);
   }

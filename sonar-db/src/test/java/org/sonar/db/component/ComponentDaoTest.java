@@ -1036,6 +1036,55 @@ public class ComponentDaoTest {
     assertThat(result).extracting("uuid").containsExactly("file-uuid-6", "file-uuid-5", "file-uuid-4");
   }
 
+  @Test
+  public void deprecated_update() {
+    db.prepareDbUnit(getClass(), "update.xml");
+
+    ComponentDto componentDto = new ComponentDto()
+      .setUuid("GHIJ")
+      .setProjectUuid("DCBA")
+      .setModuleUuid("HGFE")
+      .setModuleUuidPath(".DCBA.HGFE.")
+      .setKey("org.struts:struts-core:src/org/struts/RequestContext2.java")
+      .setDeprecatedKey("org.struts:struts-core:src/org/struts/RequestContext2.java")
+      .setName("RequestContext2.java")
+      .setLongName("org.struts.RequestContext2")
+      .setQualifier("LIF")
+      .setScope("LIF")
+      .setLanguage("java2")
+      .setDescription("description2")
+      .setPath("src/org/struts/RequestContext2.java")
+      .setRootUuid("uuid_4")
+      .setCopyComponentUuid("uuid_6")
+      .setDeveloperUuid("uuid_9")
+      .setEnabled(false)
+      .setAuthorizationUpdatedAt(12345678910L);
+
+    underTest.update(dbSession, componentDto);
+    dbSession.commit();
+
+    ComponentDto result = underTest.selectByUuid(dbSession, "GHIJ").get();
+    assertThat(result).isNotNull();
+    assertThat(result.uuid()).isEqualTo("GHIJ");
+    assertThat(result.projectUuid()).isEqualTo("DCBA");
+    assertThat(result.moduleUuid()).isEqualTo("HGFE");
+    assertThat(result.moduleUuidPath()).isEqualTo(".DCBA.HGFE.");
+    assertThat(result.key()).isEqualTo("org.struts:struts-core:src/org/struts/RequestContext2.java");
+    assertThat(result.deprecatedKey()).isEqualTo("org.struts:struts-core:src/org/struts/RequestContext2.java");
+    assertThat(result.name()).isEqualTo("RequestContext2.java");
+    assertThat(result.longName()).isEqualTo("org.struts.RequestContext2");
+    assertThat(result.qualifier()).isEqualTo("LIF");
+    assertThat(result.scope()).isEqualTo("LIF");
+    assertThat(result.language()).isEqualTo("java2");
+    assertThat(result.description()).isEqualTo("description2");
+    assertThat(result.path()).isEqualTo("src/org/struts/RequestContext2.java");
+    assertThat(result.getRootUuid()).isEqualTo("uuid_4");
+    assertThat(result.getCopyResourceUuid()).isEqualTo("uuid_6");
+    assertThat(result.getDeveloperUuid()).isEqualTo("uuid_9");
+    assertThat(result.isEnabled()).isFalse();
+    assertThat(result.getAuthorizationUpdatedAt()).isEqualTo(12345678910L);
+  }
+
   private static ComponentTreeQuery.Builder newTreeQuery(String baseUuid) {
     return ComponentTreeQuery.builder()
       .setPage(1)
